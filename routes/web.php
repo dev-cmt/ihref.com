@@ -3,13 +3,17 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PagesController;
 
-Route::get('/', function () {
-    return view('welcome');
-})->name('home');
+Route::get('/', [HomeController::class, 'welcome'])->name('home');
+
+Route::post('/registation/store', [HomeController::class, 'registationStore'])->name('registation.store');
+Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
+Route::post('/registation-payment/store', [HomeController::class, 'registationPaymentStore'])->name('registation-payment.store');
+Route::get('/get/payment-number', [HomeController::class, 'registationPaymentStore'])->name('get-payment-number');
 
 /**-------------------------------------------------------------------------
  * KEY : DASHBOARD PROFILE
