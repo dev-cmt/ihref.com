@@ -30,6 +30,14 @@
                     </a>
                 </li>
 
+                <!-- Dashboard - Always visible -->
+                <li class="slide">
+                    <a href="{{ route('members.index') }}" class="side-menu__item {{ Request::is('members*') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Member</span>
+                    </a>
+                </li>
+
                 <!-- Authentication - Only for admin -->
                 @canany(['view roles', 'view users'])
                 <li class="slide has-sub">

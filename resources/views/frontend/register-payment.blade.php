@@ -1,230 +1,147 @@
 <x-frontend-layout>
 @push('css')
-    <style>
-        .input-hidden {
-            position: absolute;
-            left: -9999px;
-        }
-        input[type=radio]:checked + label>img {
-            border: 1px solid #fff;
-            box-shadow: 0 0 3px 3px #ff0000;
-        }
-        input[type=radio] + label>img {
-            border: 1px dashed #444;
-            width: 95px;
-            height: 95px;
-            transition: 500ms all;
-            margin-bottom: 10px;
-        }
-        input[type=radio]:checked + label>img {
-            transform: scale(0.8);
-        }
-        .box{
-            display: none;
-        }
-    </style>
+<style>
+    .custom-radio-card{cursor:pointer;transition:all .3s ease;border:2px solid transparent;border-radius:.5rem;}
+    .custom-radio-card:hover{border-color:#0d6efd;}
+    .custom-radio-card.active{border-color:#0d6efd;box-shadow:0 0 0 .25rem rgba(13,110,253,.25);}
+    .custom-radio-card img{width:90px;height:90px;border-radius:.3rem;}
+</style>
 @endpush
-    <!-- ======= Contact Section ======= -->
-    <section id="contact" class="contact">
-        <div class="container">
-            <div class="row m-auto">
-                {{-- <div class="col-lg-6">
-                    <div class="card" style="border-radius: 0">
-                        <div class="card-header pt-4">
-                            <h4 class="card-title">Memeber Details</h4>
-                        </div>
-                        <div class="card-body">
-                            <div class="bootstrap-media">
-                                <div class="row d-flex justify-content-center">
-                                    <div class="col-lg-12 text-center">
-                                        <img class="img-fluid rounded" width="120" src="{{asset('public')}}/images/profile/ }}" alt="DexignZone">
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col-sm-6 col-5">
-                                        <h5 class="f-w-500">Member ID <span class="pull-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-sm-6 col-7"><span>{{member_code}}</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col-sm-6 col-5">
-                                        <h5 class="f-w-500">Name <span class="pull-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-sm-6 col-7"><span>{{name}}</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col-sm-6 col-5">
-                                        <h5 class="f-w-500">Email <span class="pull-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-sm-6 col-7"><span>{{email}}</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col-sm-6 col-5">
-                                        <h5 class="f-w-500">Member Type <span class="pull-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-sm-6 col-7"><span>{{memberType->name}}</span>
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col-sm-6 col-5">
-                                        <h5 class="f-w-500">Joining Date <span class="pull-right">:</span>
-                                        </h5>
-                                    </div>
-                                    <div class="col-sm-6 col-7"><span>{{date("j F, Y", strtotime(created_at))}}</span></div>
-                                </div>
-                            </div>
-                        </div>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-lg border-0 rounded-3">
+                <div class="card-body p-5">
+
+                    <div class="text-center mb-4">
+                        <img class="img-fluid rounded-circle mb-3 border border-3" width="120" src="{{asset('images/logo.jpg')}}" alt="Profile">
+                        <h4 class="mb-0">{{ auth()->guard('member')->user()->name }}</h4>
+                        <p class="text-muted small">Member ID: {{ auth()->guard('member')->user()->member_code }}</p>
                     </div>
-                </div> --}}
-                <div class="col-lg-6 form">
-                    @if (session()->has('success'))
-                        <strong class="text-success">{{session()->get('success')}}</strong>
+                    <hr class="my-4">
+
+                    <h5 class="card-title text-center mb-4">
+                        <span class="text-success">Complete Your Payment </span><br>
+                        <span class="fs-16">Select Payment Method</span>
+                    </h5>
+
+                    @if(session('success'))
+                        <div class="alert alert-success text-center">{{ session('success') }}</div>
                     @endif
-                    <form action="{{route('registation-payment.store')}}" method="post" enctype="multipart/form-data" class="php-email-form">
+
+                    <form action="{{ route('registation-payment.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
-                        <input type="hidden" name="payment_reason_id" value="1">
-                        <input type="hidden" name="ref_reason_id">
-                        <div class="row g-3">
-                            <div class="d-flex justify-content-center" style="border-bottom: 1px dashed #ff0000;">
-                                <div>
-                                    <input type="radio" name="payment_method_id" id="bKash" class="input-hidden" value="1"/>
-                                    <label for="bKash"><img src="{{asset('images')}}/payment/bKash.png" alt="Payment bKash" /></label>
 
-                                    {{-- <input type="radio" name="payment_method_id" id="roket" class="input-hidden" value="2"/>
-                                    <label for="roket"><img src="{{asset('images')}}/payment/roket.png" alt="Payment roket" /></label>
-
-                                    <input type="radio" name="payment_method_id" id="nagad" class="input-hidden" value="3"/>
-                                    <label for="nagad"><img src="{{asset('images')}}/payment/nagad.png" alt="Payment nagad" /></label> --}}
-
-                                    <input type="radio" name="payment_method_id" id="city-bank" class="input-hidden" value="2"/>
-                                    <label for="city-bank"><img src="{{asset('images')}}/payment/city-bank.jpg" alt="Payment upay"/></label>
-
-                                    @error('payment_method_id')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                        <div class="mb-4">
+                            <div class="row g-3 justify-content-center">
+                                <div class="col-auto">
+                                    <label class="custom-radio-card d-block p-3 text-center" for="Nagad">
+                                        <input type="radio" name="payment_method_id" id="Nagad" class="d-none" value="1"/>
+                                        <img src="{{ asset('images/payment/nagad.png') }}" alt="Nagad" class="img-fluid">
+                                        <div class="mt-2">Nagad</div>
+                                    </label>
+                                </div>
+                                <div class="col-auto">
+                                    <label class="custom-radio-card d-block p-3 text-center" for="bank">
+                                        <input type="radio" name="payment_method_id" id="bank" class="d-none" value="2"/>
+                                        <img src="{{ asset('images/payment/bank-asia-ltd.png') }}" alt="Bank" class="img-fluid">
+                                        <div class="mt-2">Bank</div>
+                                    </label>
                                 </div>
                             </div>
-                            <div class="row mt-2">
-                                <div class="col-md-6 mt-2">
-                                    <label class="form-label" id="labelChange">Payment Number
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <select name="payment_number" id="payment_number" class="form-control form-select  @error('payment_number') is-invalid @enderror" style="height: 40px;">
-                                        <option selected disabled>Not Found</option>
-                                    </select>
-                                    @error('payment_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
+                            @error('payment_method_id')
+                                <span class="invalid-feedback d-block text-center"><strong>{{ $message }}</strong></span>
+                            @enderror
+                        </div>
+
+                        <div id="paymentFields" style="display: none;">
+                            <div class="row g-3">
+                                <div class="col-12 text-center" id="nagadQR" style="display: none;">
+                                    <img src="{{ asset('images/payment/nagad-qr.jpg') }}" class="img-fluid border rounded col-12 col-sm-10 col-md-7 col-lg-5 p-2">
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="payment_number" id="payment_number" class="form-control" readonly placeholder="Payment/Bank Number">
+                                        <label for="payment_number" id="labelChange">Payment Number</label>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="form-floating">
+                                        <input type="text" name="paid_amount" class="form-control" placeholder="paid_amount">
+                                        <label>Amount</label>
+                                    </div>
+                                    @error('paid_amount')
+                                        <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
-                                <div class="col-md-6 mt-2" id="slip" style="display: none">
+
+                                <div class="col-md-6" id="slipDiv" style="display: none;">
                                     <label class="form-label">Bank Slip</label>
-                                    <input type="file" id="slip" name="slip" class="form-control @error('slip') is-invalid @enderror" value="{{old('slip')}}" accept=".pdf,.jpeg,.jpg,.png,.gif,.doc,.docx">
-                                    @error('slip')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+                                    <input type="file" name="slip" class="form-control" accept=".pdf,.jpeg,.jpg,.png,.gif,.doc,.docx">
                                 </div>
-                                <div class="col-md-6 mt-2" id="transactionNumber">
-                                    <label class="form-label">Transaction Number
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="transaction_number" class="form-control @error('transaction_number') is-invalid @enderror" value="{{old('transaction_number')}}" placeholder="XXXXXXXXX">
-                                    @error('transaction_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+
+                                <div class="col-md-6" id="transactionDiv" style="display: none;">
+                                    <div class="form-floating">
+                                        <input type="text" name="transaction_number" class="form-control" placeholder="Transaction Number">
+                                        <label>Transaction Number</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mt-2" id="transferNumber">
-                                    <label class="form-label">Transfer Number
-                                        <span class="text-danger">*</span>
-                                    </label>
-                                    <input type="text" name="transfer_number" class="form-control @error('transfer_number') is-invalid @enderror" placeholder="01X-XXXX-XXXX" value="{{old('transfer_number') }}">
-                                    @error('transfer_number')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
+
+                                <div class="col-md-6" id="transferDiv" style="display: none;">
+                                    <div class="form-floating">
+                                        <input type="text" name="transfer_number" class="form-control" placeholder="Transfer Number">
+                                        <label>Transfer Number</label>
+                                    </div>
                                 </div>
-                                <div class="col-md-6 mt-2">
-                                    <label class="form-label">Amount</label>
-                                    <input type="text" name="amount" class="form-control" value="">
-                                    @error('amount')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                    @enderror
-                                </div>
-                                <div class="col-md-12 mt-2">
-                                    <label class="form-label">Message</label>
-                                    <textarea class="form-control py-3" name="message" value="{{old('message')}}" rows="2" placeholder="Enter your message here..."></textarea>
+
+                                <div class="col-12">
+                                    <div class="form-floating">
+                                        <textarea class="form-control" name="message" rows="3" placeholder="Enter your message here..."></textarea>
+                                        <label>Message (optional)</label>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="col-sm-10 mt-2">
-                                    <button type="submit" class="btn btn-primary">Submit</button>
-                                </div>
-                            </div>
+                        </div>
+
+                        <div class="d-grid mt-4">
+                            <button type="submit" class="btn btn-primary btn-lg">Submit Payment</button>
                         </div>
                     </form>
+
                 </div>
             </div>
-
         </div>
-    </section><!-- End Contact Section -->
+    </div>
+</div>
 
 @push('js')
-    <script>
-        //======Get Item Group All Data
-        $(document).on('click', 'input[type="radio"]', function() {
-            var methodId = $(this).attr("value");
-            $.ajax({
-                url: '{{ route('get-payment-number')}}', // Make sure the route is correct
-                method: 'GET',
-                dataType: "json",
-                data: {'method_id': methodId},
-                success: function(response) {
-                    //--Get Customer Type Data
-                    var datas = response.data;
-                    var payment_number_dr = $('#payment_number');
-                    payment_number_dr.empty();
-                    // payment_number_dr.append('<option disabled selected>--Select--</option>');
-                    if(datas.length > 0){
-                        $.each(datas, function(index, option) {
-                            payment_number_dr.append('<option value="' + option.number + '">' + option.number + '</option>');
-                        });
-                    }else{
-                        payment_number_dr.append('<option disabled selected>Not available</option>');
-                    }
-                },
-                error: function() {
-                    alert('Sorry try agian...');
-                }
-            });
-            if(methodId == 2){
-                $('#transferNumber').hide();
-                $('#transactionNumber').hide();
-                $('#labelChange').html('Bank-Number');
-                $('#slip').show();
-            }else{
-                $('#transferNumber').show();
-                $('#transactionNumber').show();
-                $('#labelChange').html('Payment Number');
-                $('#slip').hide();
-            }
-        });
-    </script>
+<script>
+$(function(){
+    $('input[name="payment_method_id"]').on('change', function() {
+        var methodId = $(this).val();
+
+        $('label[for="Nagad"], label[for="bank"]').removeClass('active');
+        $(this).closest('label').addClass('active');
+
+        $('#paymentFields').show();
+        $('#nagadQR,#transactionDiv,#transferDiv,#slipDiv').hide();
+
+        if(methodId === '2'){ // Bank
+            $('#payment_number').val('1083410102157');
+            $('#slipDiv').show();
+            $('#labelChange').text('Bank Account Number');
+        } else if(methodId === '1'){ // Nagad
+            $('#nagadQR').show();
+            $('#payment_number').val('01845972143');
+            $('#transactionDiv').show();
+            $('#transferDiv').show();
+            $('#labelChange').text('Nagad Payment Number');
+        }
+    });
+});
+</script>
 @endpush
 </x-frontend-layout>

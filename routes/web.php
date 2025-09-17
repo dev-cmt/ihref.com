@@ -4,16 +4,19 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\MemberController;
 
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
-
 Route::post('/registation/store', [HomeController::class, 'registationStore'])->name('registation.store');
-Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
-Route::post('/registation-payment/store', [HomeController::class, 'registationPaymentStore'])->name('registation-payment.store');
-Route::get('/get/payment-number', [HomeController::class, 'registationPaymentStore'])->name('get-payment-number');
+
+Route::middleware(['auth:member'])->group(function () {
+    Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
+    Route::post('/registation-payment/store', [HomeController::class, 'registationPaymentStore'])->name('registation-payment.store');
+});
 
 /**-------------------------------------------------------------------------
  * KEY : DASHBOARD PROFILE
@@ -33,6 +36,9 @@ Route::group(['middleware' => ['auth']], function() {
     Route::resource('roles', RoleController::class);
     Route::resource('users', UserController::class);
 
+    // MEMBER
+    Route::get('members', [MemberController::class, 'index'])->name('members.index');
+
     // COMPANY SETTING
     Route::get('company-setting', [PagesController::class, 'companySetting'])->name('company-setting');
     Route::post('company-setting/store', [PagesController::class, 'companySettingStore'])->name('company-setting.store');
@@ -41,6 +47,11 @@ Route::group(['middleware' => ['auth']], function() {
 
 
 
+//==================// Location //==================//
+Route::get('/location', [LocationController::class, 'index'])->name('location');
+Route::get('/get-districts', [LocationController::class, 'getDistricts'])->name('get_districts');
+Route::get('/get-upazila', [LocationController::class, 'getUpazilas'])->name('get_upazila');
+Route::get('/get-thana', [LocationController::class, 'getThanas'])->name('get_thana');
 
 
 
