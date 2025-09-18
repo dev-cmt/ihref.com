@@ -34,12 +34,27 @@
                 <li class="slide">
                     <a href="{{ route('members.index') }}" class="side-menu__item {{ Request::is('members*') ? 'active' : '' }}">
                         <i class="bx bxs-dashboard side-menu__icon"></i>
-                        <span class="side-menu__label">Member</span>
+                        <span class="side-menu__label">Member List</span>
                     </a>
                 </li>
 
-                <!-- Authentication - Only for admin -->
-                @canany(['view roles', 'view users'])
+                <li class="slide">
+                    <a href="{{ route('members-approve.index') }}" class="side-menu__item {{ Request::is('member-approve') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Member Approve</span>
+                    </a>
+                </li>
+
+                <!-- Dashboard - Always visible -->
+                <li class="slide">
+                    <a href="{{ route('payments.index') }}" class="side-menu__item {{ Request::is('payments*') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Payments</span>
+                    </a>
+                </li>
+
+                {{-- <!-- Authentication - Only for admin -->
+                @canany(['view-old roles', 'view users'])
                 <li class="slide has-sub">
                     <a href="javascript:void(0);" class="side-menu__item">
                         <i class="bx bx-fingerprint side-menu__icon"></i>
@@ -73,7 +88,7 @@
                         <span class="side-menu__label">Settings</span>
                     </a>
                 </li>
-                @endcan
+                @endcan --}}
 
             </ul>
             <div class="slide-right" id="slide-right">

@@ -16,6 +16,7 @@ Route::post('/registation/store', [HomeController::class, 'registationStore'])->
 Route::middleware(['auth:member'])->group(function () {
     Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
     Route::post('/registation-payment/store', [HomeController::class, 'registationPaymentStore'])->name('registation-payment.store');
+    Route::get('/payment/waiting-approval', [HomeController::class, 'waitingApproval'])->name('waiting-approval');
 });
 
 /**-------------------------------------------------------------------------
@@ -38,6 +39,21 @@ Route::group(['middleware' => ['auth']], function() {
 
     // MEMBER
     Route::get('members', [MemberController::class, 'index'])->name('members.index');
+    Route::get('members/{member}/show', [MemberController::class, 'show'])->name('members.show');
+    Route::get('members/{member}/edit', [MemberController::class, 'edit'])->name('members.edit');
+    Route::patch('members/{member}', [MemberController::class, 'update'])->name('members.update');
+    Route::delete('members/{member}', [MemberController::class, 'destroy'])->name('members.destroy');
+
+
+    Route::get('member-approve', [MemberController::class, 'index'])->name('members-approve.index');
+    Route::patch('members/{member}/approve', [MemberController::class, 'membersApprove'])->name('members.approve');
+    Route::patch('members/{member}/cancel', [MemberController::class, 'membersCancel'])->name('members.cancel');
+
+    Route::get('payments', [MemberController::class, 'paymentsIndex'])->name('payments.index');
+    Route::patch('payments/{payment}/approve', [MemberController::class,'paymentsApprove'])->name('payments.approve');
+    Route::patch('payments/{payment}/cancel', [MemberController::class,'paymentsCancel'])->name('payments.cancel');
+    Route::get('payments/{payment}/download-slip', [MemberController::class,'downloadSlip'])->name('payments.download-slip');
+
 
     // COMPANY SETTING
     Route::get('company-setting', [PagesController::class, 'companySetting'])->name('company-setting');

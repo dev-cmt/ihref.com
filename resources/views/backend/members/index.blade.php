@@ -9,6 +9,7 @@
     <div class="col-xl-12">
         <div class="card custom-card">
             <div class="card-body">
+
                 @if(session('success'))
                     <div class="alert alert-success alert-dismissible fade show" role="alert">
                         {{ session('success') }}
@@ -17,7 +18,7 @@
                 @endif
 
                 <div class="table-responsive">
-                    <table class="table table-hover text-nowrap">
+                    <table class="table table-hover text-nowrap align-middle">
                         <thead>
                             <tr>
                                 <th>SL</th>
@@ -25,13 +26,14 @@
                                 <th>Full Name</th>
                                 <th>Phone</th>
                                 <th>Status</th>
+                                <th>Latest Payment</th>
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($members as $key => $member)
                                 <tr>
-                                    <td>{{ ++$key }}</td>
+                                    <td>{{ $members->firstItem() + $key }}</td>
                                     <td>{{ $member->member_code }}</td>
                                     <td>{{ $member->full_name }}</td>
                                     <td>{{ $member->mobile }}</td>
@@ -43,26 +45,44 @@
                                         @endif
                                     </td>
                                     <td>
-                                        @if(!$member->status)
-                                            <form action="{{ route('admin.members.approve', $member->id) }}" method="POST" class="d-inline">
-                                                @csrf
-                                                @method('PATCH')
-                                                <button type="submit" class="btn btn-sm btn-success-light btn-icon" onclick="return confirm('Approve this member?')">
-                                                    <i class="ri-check-line"></i> Approve
-                                                </button>
-                                            </form>
+                                        @if($member->latestPayment?->status)
+                                            <span class="badge bg-success">Approved</span>
+                                        @elseif($member->latestPayment)
+                                            <span class="badge bg-warning">Pending</span>
+                                        @else
+                                            <span class="badge bg-secondary">No Payment</span>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a href="{{ route('members.show', $member->id) }}" class="btn btn-sm btn-primary-light">View</a>
+                                        <a href="{{ route('members.edit', $member->id) }}" class="btn btn-sm btn-info-light">Edit</a>
+
+                                        <form action="{{ route('members.destroy', $member->id) }}" method="POST" class="d-inline">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-sm btn-danger-light" onclick="return confirm('Delete this member?')">Delete</button>
+                                        </form>
+
+                                        @if($member->latestPayment?->slip)
+                                            <a href="{{ asset('uploads/slip/'.$member->latestPayment->slip) }}" target="_blank" download class="btn btn-sm btn-info-light">
+                                                Download Slip
+                                            </a>
                                         @endif
                                     </td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="6" class="text-center">No members found.</td>
+                                    <td colspan="7" class="text-center">No members found.</td>
                                 </tr>
                             @endforelse
                         </tbody>
                     </table>
-                </div>
 
+                    <div class="mt-3">
+                        {{ $members->links() }}
+                    </div>
+
+                </div>
             </div>
         </div>
     </div>

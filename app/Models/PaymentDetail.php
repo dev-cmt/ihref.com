@@ -49,14 +49,14 @@ class PaymentDetail extends Model
      */
 
     // If you have a Registration model
-    // public function registration()
-    // {
-    //     return $this->belongsTo(Registration::class);
-    // }
+    public function member()
+    {
+        return $this->belongsTo(Registration::class, 'registration_id');
+    }
 
     // If you have a User model
-    // public function user()
-    // {
-    //     return $this->belongsTo(User::class);
-    // }
+    public function approveBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
 }

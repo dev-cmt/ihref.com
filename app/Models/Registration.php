@@ -14,7 +14,7 @@ class Registration extends Authenticatable
     protected $fillable = [
         'member_code', 'full_name','slug','father_or_husband','mother','nid','education','dob','occupation',
         'religion','permanent_address','post_office','division_id','district_id',
-        'upazila_id','present_address','phone','mobile','photo', 'password', 'status'
+        'upazila_id', 'union_id','present_address','phone','mobile','photo', 'password', 'status', 'user_id'
     ];
 
     protected $hidden = [
@@ -30,8 +30,24 @@ class Registration extends Authenticatable
     }
 
 
-    // public function division() { return $this->belongsTo(Division::class); }
-    // public function district() { return $this->belongsTo(District::class); }
-    // public function upazila()  { return $this->belongsTo(Upazila::class); }
+    public function division() { return $this->belongsTo(Division::class); }
+    public function district() { return $this->belongsTo(District::class); }
+    public function upazila()  { return $this->belongsTo(Upazila::class); }
+    public function union()  { return $this->belongsTo(Union::class); }
+
+    public function approveBy()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function paymentDetail()
+    {
+        return $this->hasMany(PaymentDetail::class, 'registration_id');
+    }
+
+    public function latestPayment()
+    {
+        return $this->hasOne(PaymentDetail::class, 'registration_id')->latestOfMany();
+    }
     
 }

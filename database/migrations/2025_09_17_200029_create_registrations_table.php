@@ -28,12 +28,15 @@ return new class extends Migration
             $table->foreignId('division_id')->nullable()->constrained('divisions');
             $table->foreignId('district_id')->nullable()->constrained('districts');
             $table->foreignId('upazila_id')->nullable()->constrained('upazilas');
+            $table->foreignId('union_id')->nullable()->constrained('unions');
             $table->text('present_address')->nullable();
             $table->string('phone')->nullable();
             $table->string('mobile')->nullable();
             $table->string('photo')->nullable();
             $table->string('password'); // hashed password
             $table->boolean('status')->default(true); // active or inactive
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
             $table->timestamps();
         });
     }

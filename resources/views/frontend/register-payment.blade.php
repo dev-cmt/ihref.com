@@ -1,10 +1,19 @@
 <x-frontend-layout>
+@section('title', 'Payment Register')
 @push('css')
 <style>
-    .custom-radio-card{cursor:pointer;transition:all .3s ease;border:2px solid transparent;border-radius:.5rem;}
+    .custom-radio-card {
+        cursor:pointer;transition:all .3s ease;
+        border:2px solid transparent;border-radius:.5rem;
+    }
     .custom-radio-card:hover{border-color:#0d6efd;}
-    .custom-radio-card.active{border-color:#0d6efd;box-shadow:0 0 0 .25rem rgba(13,110,253,.25);}
-    .custom-radio-card img{width:90px;height:90px;border-radius:.3rem;}
+    .custom-radio-card.active{
+        border-color:#0d6efd;
+        box-shadow:0 0 0 .25rem rgba(13,110,253,.25);
+    }
+    .custom-radio-card img{
+        width:90px;height:90px;border-radius:.3rem;
+    }
 </style>
 @endpush
 
@@ -15,9 +24,13 @@
                 <div class="card-body p-5">
 
                     <div class="text-center mb-4">
-                        <img class="img-fluid rounded-circle mb-3 border border-3" width="120" src="{{asset('images/logo.jpg')}}" alt="Profile">
+                        <img class="img-fluid rounded-circle mb-3 border border-3"
+                             width="120"
+                             src="{{ asset('images/logo.jpg') }}" alt="Profile">
                         <h4 class="mb-0">{{ auth()->guard('member')->user()->name }}</h4>
-                        <p class="text-muted small">Member ID: {{ auth()->guard('member')->user()->member_code }}</p>
+                        <p class="text-muted small">
+                            Member ID: {{ auth()->guard('member')->user()->member_code }}
+                        </p>
                     </div>
                     <hr class="my-4">
 
@@ -32,6 +45,9 @@
 
                     <form action="{{ route('registation-payment.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
+
+                        {{-- Hidden text field to send payment type name --}}
+                        <input type="hidden" name="payment_type" id="payment_type">
 
                         <div class="mb-4">
                             <div class="row g-3 justify-content-center">
@@ -58,48 +74,56 @@
                         <div id="paymentFields" style="display: none;">
                             <div class="row g-3">
                                 <div class="col-12 text-center" id="nagadQR" style="display: none;">
-                                    <img src="{{ asset('images/payment/nagad-qr.jpg') }}" class="img-fluid border rounded col-12 col-sm-10 col-md-7 col-lg-5 p-2">
+                                    <img src="{{ asset('images/payment/nagad-qr.jpg') }}"
+                                         class="img-fluid border rounded col-12 col-sm-10 col-md-7 col-lg-5 p-2">
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" name="payment_number" id="payment_number" class="form-control" readonly placeholder="Payment/Bank Number">
+                                        <input type="text" name="payment_number" id="payment_number"
+                                               class="form-control" readonly placeholder="Payment/Bank Number">
                                         <label for="payment_number" id="labelChange">Payment Number</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6">
                                     <div class="form-floating">
-                                        <input type="text" name="paid_amount" class="form-control" placeholder="paid_amount">
+                                        <input type="text" name="amount_paid" class="form-control"
+                                               placeholder="Amount" required>
                                         <label>Amount</label>
                                     </div>
-                                    @error('paid_amount')
+                                    @error('amount_paid')
                                         <span class="invalid-feedback d-block"><strong>{{ $message }}</strong></span>
                                     @enderror
                                 </div>
 
                                 <div class="col-md-6" id="slipDiv" style="display: none;">
                                     <label class="form-label">Bank Slip</label>
-                                    <input type="file" name="slip" class="form-control" accept=".pdf,.jpeg,.jpg,.png,.gif,.doc,.docx">
+                                    {{-- remove permanent required; add dynamically in JS --}}
+                                    <input type="file" name="slip" class="form-control"
+                                           accept=".pdf,.jpeg,.jpg,.png,.gif,.doc,.docx">
                                 </div>
 
                                 <div class="col-md-6" id="transactionDiv" style="display: none;">
                                     <div class="form-floating">
-                                        <input type="text" name="transaction_number" class="form-control" placeholder="Transaction Number">
+                                        <input type="text" name="transaction_number" class="form-control"
+                                               placeholder="Transaction Number">
                                         <label>Transaction Number</label>
                                     </div>
                                 </div>
 
                                 <div class="col-md-6" id="transferDiv" style="display: none;">
                                     <div class="form-floating">
-                                        <input type="text" name="transfer_number" class="form-control" placeholder="Transfer Number">
+                                        <input type="text" name="transfer_number" class="form-control"
+                                               placeholder="Transfer Number">
                                         <label>Transfer Number</label>
                                     </div>
                                 </div>
 
                                 <div class="col-12">
                                     <div class="form-floating">
-                                        <textarea class="form-control" name="message" rows="3" placeholder="Enter your message here..."></textarea>
+                                        <textarea class="form-control" name="message" rows="3"
+                                                  placeholder="Enter your message here..."></textarea>
                                         <label>Message (optional)</label>
                                     </div>
                                 </div>
@@ -121,24 +145,42 @@
 <script>
 $(function(){
     $('input[name="payment_method_id"]').on('change', function() {
-        var methodId = $(this).val();
+        const methodId = $(this).val();
 
+        // highlight selected card
         $('label[for="Nagad"], label[for="bank"]').removeClass('active');
         $(this).closest('label').addClass('active');
 
+        // show main fields container
         $('#paymentFields').show();
+
+        // hide all optional sections first
         $('#nagadQR,#transactionDiv,#transferDiv,#slipDiv').hide();
+
+        // remove required from all optional inputs first
+        $('#slipDiv input, #transactionDiv input, #transferDiv input').prop('required', false);
 
         if(methodId === '2'){ // Bank
             $('#payment_number').val('1083410102157');
-            $('#slipDiv').show();
             $('#labelChange').text('Bank Account Number');
+
+            // set payment type text
+            $('#payment_type').val('bank');
+
+            // show & require only the slip field
+            $('#slipDiv').show().find('input').prop('required', true);
+
         } else if(methodId === '1'){ // Nagad
             $('#nagadQR').show();
             $('#payment_number').val('01845972143');
-            $('#transactionDiv').show();
-            $('#transferDiv').show();
             $('#labelChange').text('Nagad Payment Number');
+
+            // set payment type text
+            $('#payment_type').val('nagad');
+
+            // show & require transaction + transfer fields
+            $('#transactionDiv').show().find('input').prop('required', true);
+            $('#transferDiv').show().find('input').prop('required', true);
         }
     });
 });

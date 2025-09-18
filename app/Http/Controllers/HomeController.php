@@ -88,15 +88,20 @@ class HomeController extends Controller
             'transaction_id'      => null, // optional hidden if you want
             'transfer_number'     => $request->input('transfer_number'),
             'payment_type'        => $request->input('payment_type'),
+            'reason'              => 'Member Registration',
             'message'             => $request->input('message'),
             'slip'                => $slipPath,
             'status'              => false,
             'registration_id'     => Auth::guard('member')->id(), // logged in member id
-            'user_id'             => Auth::id(), // if admin/user also logged in, else null
+            'user_id'             => null, // if admin/user also logged in, else null
         ]);
 
-        return back()->with('success', 'Payment stored successfully!');
+        return redirect()->route('waiting-approval')->with('success', 'Payment stored successfully!');
 
+    }
+
+    public function waitingApproval(){
+        return view('frontend.waiting-approval');
     }
 
 
