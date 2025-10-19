@@ -11,13 +11,22 @@ class RoleController extends Controller
     public function index()
     {
         $roles = Role::with('permissions')->paginate(10);
+
         return view('backend.roles.index', compact('roles'));
     }
 
     public function create()
     {
         $permissions = Permission::all();
-        return view('backend.roles.create', compact('permissions'));
+
+        // Group permissions by module (assuming names like 'view-users', 'edit-users')
+        $groupedPermissions = $permissions->groupBy(function($item) {
+            $parts = explode(' ', $item->name);
+            array_shift($parts); // remove first word (action)
+            return implode(' ', $parts); // remaining words = module
+        });
+
+        return view('backend.roles.create', compact('groupedPermissions'));
     }
 
     public function store(Request $request)
@@ -27,11 +36,11 @@ class RoleController extends Controller
             'permissions' => 'required|array',
         ]);
 
+        // Create Role
         $role = Role::create(['name' => $request->name]);
 
-        // Convert permission IDs to names
-        $permissionNames = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
-        $role->syncPermissions($permissionNames);
+        // Sync permissions (names are directly sent from form)
+        $role->syncPermissions($request->permissions);
 
         return redirect()->route('admin.roles.index')->with('success', 'Role created successfully.');
     }
@@ -39,8 +48,16 @@ class RoleController extends Controller
     public function edit(Role $role)
     {
         $permissions = Permission::all();
-        return view('backend.roles.edit', compact('role', 'permissions'));
+
+        $groupedPermissions = $permissions->groupBy(function($item) {
+            $parts = explode(' ', $item->name);
+            array_shift($parts); // remove action
+            return implode(' ', $parts); // module name
+        });
+
+        return view('backend.roles.edit', compact('role', 'groupedPermissions'));
     }
+
 
     public function update(Request $request, Role $role)
     {
@@ -49,11 +66,11 @@ class RoleController extends Controller
             'permissions' => 'required|array',
         ]);
 
+        // Update Role name
         $role->update(['name' => $request->name]);
 
-        // Convert permission IDs to names
-        $permissionNames = Permission::whereIn('id', $request->permissions)->pluck('name')->toArray();
-        $role->syncPermissions($permissionNames);
+        // Sync permissions (names are directly sent from form)
+        $role->syncPermissions($request->permissions);
 
         return redirect()->route('admin.roles.index')->with('success', 'Role updated successfully.');
     }

@@ -1,17 +1,37 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\LocationController;
-use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\PagesController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\SettingController;
+use App\Http\Controllers\PageSeoController;
+use App\Http\Controllers\DeveloperApiController;
+use App\Http\Controllers\LocationController;
 use App\Http\Controllers\MemberController;
 
+//___________________________________// START \\______________________________________________//
 Route::get('/', [HomeController::class, 'welcome'])->name('home');
+
+/**______________________________________________________________________________________________
+ * View Page => ALL
+ * ______________________________________________________________________________________________
+ */
+Route::get('/registation/from', [HomeController::class, 'memberRegistation'])->name('registation.from');
 Route::post('/registation/store', [HomeController::class, 'registationStore'])->name('registation.store');
+//______________ PAGE SINGLE
+Route::get('page/activities', [HomeController::class, 'activities'])->name('page.activities');
+Route::get('page/chairman-message', [HomeController::class, 'chairmanMessage'])->name('page.chairman-message');
+Route::get('page/directors-members', [HomeController::class, 'directorsMembers'])->name('page.directors-members');
+Route::get('page/member-list', [HomeController::class, 'memberList'])->name('page.member-list');
+Route::get('page/photo-gallery', [HomeController::class, 'photoGallery'])->name('page.photo-gallery');
+Route::get('page/contact', [HomeController::class, 'contact'])->name('page.contact');
+//______________ NEWS
+Route::get('page/news', [HomeController::class, 'news'])->name('page.news');
+Route::get('page/news-details/{slug}', [HomeController::class, 'newsDetails'])->name('page.news-details');
+
 
 Route::middleware(['auth:member'])->group(function () {
     Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
@@ -19,24 +39,24 @@ Route::middleware(['auth:member'])->group(function () {
     Route::get('/payment/waiting-approval', [HomeController::class, 'waitingApproval'])->name('waiting-approval');
 });
 
-/**-------------------------------------------------------------------------
- * KEY : DASHBOARD PROFILE
- * -------------------------------------------------------------------------
+
+/**______________________________________________________________________________________________
+ * Admin Pages
+ * ______________________________________________________________________________________________
  */
 Route::get('/dashboard', [AdminController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile-index', [ProfileController::class, 'profileIndex'])->name('profile.index');
-    Route::get('/profile-settings', [ProfileController::class, 'profileSettings'])->name('profile.settings');
-    Route::post('/profile-update/image', [ProfileController::class, 'updateImage'])->name('profile.updateImage');
-    Route::post('/profile-update', [ProfileController::class, 'profileUpdate'])->name('profile.update');
-    Route::delete('/profile-destroy', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    Route::get('/change-password', [ProfileController::class, 'editPassword'])->name('password.change');
+    Route::put('/change-password', [ProfileController::class, 'updatePassword'])->name('password.update');
 });
 
-Route::group(['middleware' => ['auth']], function() {
-    Route::resource('roles', RoleController::class);
-    Route::resource('users', UserController::class);
 
+Route::group(['middleware' => ['auth']], function() {
     // MEMBER
     Route::get('members', [MemberController::class, 'index'])->name('members.index');
     Route::get('members/{member}/show', [MemberController::class, 'show'])->name('members.show');
@@ -53,13 +73,36 @@ Route::group(['middleware' => ['auth']], function() {
     Route::patch('payments/{payment}/approve', [MemberController::class,'paymentsApprove'])->name('payments.approve');
     Route::patch('payments/{payment}/cancel', [MemberController::class,'paymentsCancel'])->name('payments.cancel');
     Route::get('payments/{payment}/download-slip', [MemberController::class,'downloadSlip'])->name('payments.download-slip');
-
-
-    // COMPANY SETTING
-    Route::get('company-setting', [PagesController::class, 'companySetting'])->name('company-setting');
-    Route::post('company-setting/store', [PagesController::class, 'companySettingStore'])->name('company-setting.store');
 });
 
+
+Route::middleware('auth')->group(function () {
+    // Developer API
+    Route::get('/developer-api', [DeveloperApiController::class, 'index'])->name('developer-api.index');
+    Route::post('/developer-api/generate-token', [DeveloperApiController::class, 'generateToken'])->name('developer-api.generate-token');
+
+
+    /**----------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------
+     * BACKEND TEMPLATE
+     * ----------------------------------------------------------------------------------------------
+     * ----------------------------------------------------------------------------------------------
+     */
+    Route::resource('roles', RoleController::class);
+
+    // User Management
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::post('/users/update', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
+    // Settings
+    Route::get('/settings', [SettingController::class, 'index'])->name('setting.index');
+    Route::post('/settings-update', [SettingController::class, 'update'])->name('setting.update');
+
+    // SEO settings
+    Route::get('/seo-pages',[PageSeoController::class,'index'])->name('settings.seo.index');
+    Route::post('/seo-pages/{page}',[PageSeoController::class,'update'])->name('settings.seo.update');
+});
 
 
 
@@ -68,8 +111,6 @@ Route::get('/location', [LocationController::class, 'index'])->name('location');
 Route::get('/get-districts', [LocationController::class, 'getDistricts'])->name('get_districts');
 Route::get('/get-upazila', [LocationController::class, 'getUpazilas'])->name('get_upazila');
 Route::get('/get-thana', [LocationController::class, 'getThanas'])->name('get_thana');
-
-
 
 
 require __DIR__.'/auth.php';

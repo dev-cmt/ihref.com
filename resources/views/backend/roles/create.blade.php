@@ -1,49 +1,111 @@
-@extends('backEnd.admin.layout.master')
-@section('title', 'Create Role')
+<x-backend-layout title="Create Role & Permissions">
+    @push('css')
+        <style>
+            .permission-card {
+                border: 1px solid #ddd;
+                border-radius: 6px;
+            }
 
-@section('content')
-<div class="page-header-breadcrumb my-4 d-md-flex d-block align-items-center justify-content-between">
-    <h1 class="page-title fw-semibold fs-18 mb-0">Create Role</h1>
-    <div>
-        <a href="{{ route('admin.roles.index') }}" class="btn btn-secondary btn-sm">Back</a>
-    </div>
-</div>
+            .permission-list {
+                padding-left: 10px;
+            }
+        </style>
+    @endpush
 
-<div class="row">
-    <div class="col-xl-6">
-        <div class="card custom-card">
-            <div class="card-body">
-                <form action="{{ route('admin.roles.store') }}" method="POST">
-                    @csrf
-                    <div class="form-group mb-3">
-                        <label for="name">Role Name</label>
-                        <input type="text" name="name" class="form-control" value="{{ old('name') }}" required>
-                        @error('name')
-                            <div class="text-danger mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
+    <div class="row mt-4">
+        <div class="col-md-12">
+            <form action="{{ route('roles.store') }}" method="POST">
+                @csrf
+                <div class="card">
+                    <div class="card-body">
+                        <!-- Role Name -->
+                        <div class="mb-3">
+                            <label class="form-label"><b>Role Name</b></label>
+                            <input type="text" name="name" class="form-control" placeholder="Enter Role Name" required>
+                        </div>
 
-                    <div class="form-group mb-3">
-                        <label>Permissions</label>
+                        <!-- Select All Permissions -->
+                        <div class="form-check mb-3">
+                            <input type="checkbox" id="select_all" class="form-check-input">
+                            <label for="select_all" class="form-check-label"><b>Select All Permissions</b></label>
+                        </div>
+
+                        <!-- Permissions Grid -->
                         <div class="row">
-                            @foreach($permissions as $permission)
-                                <div class="col-6">
-                                    <div class="form-check">
-                                        <input type="checkbox" name="permissions[]" value="{{ $permission->id }}" class="form-check-input" id="perm{{ $permission->id }}">
-                                        <label class="form-check-label" for="perm{{ $permission->id }}">{{ $permission->name }}</label>
+                            @foreach ($groupedPermissions as $module => $permissions)
+                                <div class="col-md-4">
+                                    <div class="card border rounded p-2 mb-3 permission-card">
+                                        <div class="card-header bg-light">
+                                            <input type="checkbox" class="form-check-input module_check" id="module-{{ $module }}">
+                                            <label for="module-{{ $module }}" class="form-check-label mb-0 fw-bold">
+                                                {{ ucfirst($module) }} ({{ count($permissions) }})
+                                            </label>
+                                        </div>
+                                        <div class="card-body p-2 permission-list">
+                                            @foreach ($permissions as $permission)
+                                                <div class="form-check mb-1">
+                                                    <input type="checkbox" name="permissions[]"
+                                                        value="{{ $permission->name }}"
+                                                        class="form-check-input permission_item"
+                                                        id="perm-{{ $permission->name }}">
+                                                    <label for="perm-{{ $permission->name }}" class="form-check-label">
+                                                        {{ ucfirst(str_replace('-', ' ', $permission->name)) }}
+                                                    </label>
+                                                </div>
+                                            @endforeach
+                                        </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
-                        @error('permissions')
-                            <div class="text-danger mt-1">{{ $message }}</div>
-                        @enderror
-                    </div>
 
-                    <button type="submit" class="btn btn-primary">Create Role</button>
-                </form>
-            </div>
+                        <!-- Submit Button -->
+                        <button type="submit" class="btn btn-success mt-3">
+                            <i class="fas fa-save me-2"></i>Save Role
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
     </div>
-</div>
-@endsection
+
+    @push('js')
+        <script>
+            $(document).ready(function() {
+                const selectedPermissions = [];
+
+                // Select All
+                $('#select_all').on('change', function() {
+                    const checked = $(this).prop('checked');
+                    $('.module_check, .permission_item').prop('checked', checked);
+                });
+
+                // Module select/deselect
+                $('.module_check').on('change', function() {
+                    const card = $(this).closest('.permission-card');
+                    const checked = $(this).prop('checked');
+                    card.find('.permission_item').prop('checked', checked);
+                    updateSelectAll();
+                });
+
+                // Individual permission check
+                $('.permission_item').on('change', function() {
+                    const card = $(this).closest('.permission-card');
+                    const allChecked = card.find('.permission_item').length === card.find(
+                        '.permission_item:checked').length;
+                    card.find('.module_check').prop('checked', allChecked);
+                    updateSelectAll();
+                });
+
+                function updateSelectAll() {
+                    const total = $('.permission_item').length;
+                    const checked = $('.permission_item:checked').length;
+                    const selectAll = $('#select_all');
+                    if (checked === total) selectAll.prop('checked', true).prop('indeterminate', false);
+                    else if (checked > 0) selectAll.prop('checked', false).prop('indeterminate', true);
+                    else selectAll.prop('checked', false).prop('indeterminate', false);
+                }
+            });
+        </script>
+    @endpush
+    </x-backend-layout>

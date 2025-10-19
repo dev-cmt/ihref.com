@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Admin;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
-    public function dashboard(Request $request)
+    public function dashboard()
     {
-        $user = Auth::user();
-        return view('backend.dashboard', compact('user'));
+        $data['total_applications'] = User::count();
+        return view('backend.dashboard',compact('data'));
     }
+
 }

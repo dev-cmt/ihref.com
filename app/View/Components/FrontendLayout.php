@@ -3,15 +3,28 @@
 namespace App\View\Components;
 
 use Illuminate\View\Component;
-use Illuminate\View\View;
 
 class FrontendLayout extends Component
 {
-    /**
-     * Get the view / contents that represents the component.
-     */
-    public function render(): View
+    public $title;
+    public $seotags;
+    public $breadcrumbs;
+    public $jsonld;
+
+    // Accept title, seo_tags, and json_ld from the component tag
+    public function __construct($title = null, $seotags = null, $breadcrumbs = null, $jsonld = null)
     {
-        return view('layouts.frontend');
+        $this->title = $title;
+        $this->seotags = $seotags;
+        $this->breadcrumbs = $breadcrumbs;
+        $this->jsonld = $jsonld;
+    }
+
+    /**
+     * Get the view / contents that represent the component.
+     */
+    public function render()
+    {
+        return view('frontend.layouts.master');
     }
 }

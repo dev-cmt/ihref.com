@@ -3,21 +3,94 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
 use App\Helpers\ImageHelper;
-use App\Models\Registration;
+use App\Http\Traits\SeoTrait;
+use App\Models\Page;
 use App\Models\PaymentDetail;
+use App\Models\Registration;
+
 
 class HomeController extends Controller
 {
+    use SeoTrait;
+
     public function welcome()
+    {
+        // SEO
+        $page = Page::with('seo')->where('slug','home')->firstOrFail();
+        $this->setSeo([
+            'title'       => $page->seo->meta_title ?? $page->title,
+            'description' => $page->seo->meta_description ?? '',
+            'keywords'    => $this->formatKeywords($page->seo->meta_keywords ?? ''),
+            'image'       => $page->seo->og_image ?? '',
+            'canonical'   => url()->current(),
+        ]);
+        $seotags = $this->generateTags();
+
+        $breadcrumbs = $this->generateBreadcrumbJsonLd([
+            ['name' => 'Home', 'url' => url('/')],
+        ]);
+        return view('frontend.welcome', compact('seotags','breadcrumbs'));
+    }
+    public function activities()
+    {
+        return view('frontend.pages.activities');
+    }
+
+    public function chairmanMessage()
+    {
+        return view('frontend.pages.chairman-message');
+    }
+
+    public function directorsMembers()
+    {
+        return view('frontend.pages.directors-members');
+    }
+
+    public function memberList()
+    {
+        return view('frontend.pages.member-list');
+    }
+
+    public function photoGallery()
+    {
+        return view('frontend.pages.photo-gallery');
+    }
+
+    public function contact()
+    {
+        return view('frontend.pages.contact');
+    }
+
+    // ____________ NEWS
+    public function news()
+    {
+        return view('frontend.pages.news');
+    }
+
+    public function newsDetails($slug)
+    {
+        // You can later load news details from the database using $slug
+        return view('frontend.pages.news-details', compact('slug'));
+    }
+
+
+
+    /**------------------------------------------------------------------------------
+     * MEMBER REGISTER && PAYMNET REGISTER
+     * ------------------------------------------------------------------------------
+     */
+    public function memberRegistation()
     {
         $divisions = DB::table('divisions')->get();
 
-        return view('welcome', compact('divisions'));
+        return view('frontend.pages.register-from', compact('divisions'));
     }
 
     public function registationStore(Request $request)
@@ -65,6 +138,7 @@ class HomeController extends Controller
     {
         return view('frontend/register-payment');
     }
+
     public function registationPaymentStore(Request $request)
     {
         $request->validate([
@@ -101,27 +175,7 @@ class HomeController extends Controller
     }
 
     public function waitingApproval(){
-        return view('frontend.waiting-approval');
-    }
-
-
-
-    public function memberLogin(Request $request)
-    {
-        $request->validate([
-            'mobile'   => 'required|string',
-            'password' => 'required|string',
-        ]);
-
-        $member = Registration::where('mobile', $request->mobile)->first();
-
-        if ($member && Hash::check($request->password, $member->password)) {
-            // Login the member manually
-            Auth::login($member); // logs in the member
-            return redirect()->route('registation-payment');
-        }
-
-        return back()->withErrors(['mobile' => 'Invalid phone or password.']);
+        return view('frontend.pages.waiting-approval');
     }
 
 }

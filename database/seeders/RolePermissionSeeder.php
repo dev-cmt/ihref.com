@@ -5,9 +5,9 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
 
 class RolePermissionSeeder extends Seeder
 {
@@ -29,10 +29,13 @@ class RolePermissionSeeder extends Seeder
         // 2️⃣ Define Modules
         // -------------------------------
         $modules = [
+            'packages',
+            'developer api',
+            'settings',
             'seo',
             'users',
             'roles',
-            'settings',
+            'dashboard',
         ];
 
         // -------------------------------
@@ -47,37 +50,55 @@ class RolePermissionSeeder extends Seeder
             }
         }
 
+        // 🟢 Add extra single permission's
+        $extraPermissions = [
+            'view reports'
+        ];
+        foreach ($extraPermissions as $perm) {
+            Permission::firstOrCreate(['name' => $perm]);
+        }
+        $permissions = array_merge($permissions, $extraPermissions);
+
         // -------------------------------
         // 4️⃣ Create Roles
         // -------------------------------
+        $superAdminRole = Role::firstOrCreate(['name' => 'superadmin']);
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
-        $editorRole = Role::firstOrCreate(['name' => 'editor']);
+        $customerRole = Role::firstOrCreate(['name' => 'customer']);
 
         // -------------------------------
         // 5️⃣ Assign Permissions
         // -------------------------------
-        $adminRole->syncPermissions($permissions); // Admin: all permissions
+        $superAdminRole->syncPermissions($permissions); // Super Admin: all permissions
+        $adminRole->syncPermissions($permissions);      // Admin: all permissions
 
-        $editorPermissions = array_filter($permissions, function ($p) {
-            return str_starts_with($p, 'view') || str_starts_with($p, 'blogs');
+        // Customer: only view developer api & dashboard
+        $customerPermissions = array_filter($permissions, function($p) {
+            return str_starts_with($p, 'view') && (str_contains($p, 'developer api') || str_contains($p, 'dashboard'));
         });
-        $editorRole->syncPermissions($editorPermissions);
+        $customerRole->syncPermissions($customerPermissions);
 
         // -------------------------------
-        // 6️⃣ Assign Roles to Existing Users (if exist)
+        // 6️⃣ Assign Roles to Default Users
         // -------------------------------
+        $superAdmin = User::firstOrCreate(
+            ['email' => 'super@gmail.com'],
+            ['name' => 'Super Admin', 'password' => 'super12345']
+        );
+        $superAdmin->syncRoles([$superAdminRole]);
+
         $admin = User::firstOrCreate(
             ['email' => 'admin@gmail.com'],
-            ['name' => 'Admin User', 'password' => Hash::make('password')]
+            ['name' => 'Admin User', 'password' => 'admin12345']
         );
         $admin->syncRoles([$adminRole]);
 
-        $editor = User::firstOrCreate(
-            ['email' => 'editor@gmail.com'],
-            ['name' => 'Editor User', 'password' => Hash::make('password')]
+        $customer = User::firstOrCreate(
+            ['email' => 'customer@gmail.com'],
+            ['name' => 'Customer User', 'password' => 'customer12345']
         );
-        $editor->syncRoles([$editorRole]);
+        $customer->syncRoles([$customerRole]);
 
-        $this->command->info('✅ Roles & Permissions refreshed successfully (users kept intact)!');
+        $this->command->info('✅ Roles & Permissions refreshed successfully!');
     }
 }
