@@ -2,15 +2,6 @@
     @push('css')
         <style>
             /* ---- Page layout ---- */
-            body, html {
-                height: 100%;
-                margin: 0;
-                background: #f0f4ff;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-            }
 
             /* ---- Card ---- */
             .wait-card {
@@ -21,6 +12,7 @@
                 box-shadow: 0 10px 30px rgba(0,0,0,0.1);
                 max-width: 400px;
                 width: 90%;
+                margin-top: 120px;
             }
 
             /* ---- Animated Circle ---- */
@@ -88,17 +80,18 @@
             .btn-home:hover { background: #0b5ed7; }
         </style>
     @endpush
-
-    <div class="wait-card">
-        <div class="circle">
-            <svg class="checkmark" viewBox="0 0 52 52">
-                <path d="M14 27 L22 35 L38 17" />
-            </svg>
+    <div class="d-flex justify-content-center item-align-center ali py-5">
+        <div class="wait-card ">
+            <div class="circle">
+                <svg class="checkmark" viewBox="0 0 52 52">
+                    <path d="M14 27 L22 35 L38 17" />
+                </svg>
+            </div>
+            <h2>Payment Submitted!</h2>
+            <p>Your payment is received and is <strong>waiting for admin approval</strong>.</p>
+            <p>You will be notified once it’s approved.</p>
+            <a href="{{ url('/') }}" class="btn-home">Go to Homepage</a>
         </div>
-        <h2>Payment Submitted!</h2>
-        <p>Your payment is received and is <strong>waiting for admin approval</strong>.</p>
-        <p>You will be notified once it’s approved.</p>
-        <a href="{{ url('/') }}" class="btn-home">Go to Homepage</a>
     </div>
 
     @push('js')

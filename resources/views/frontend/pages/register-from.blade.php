@@ -45,7 +45,7 @@
                         </p>
 
                         <!-- ✅ Registration Form -->
-                        <form method="POST" action="{{ route('registation.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('registration.store') }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row g-3">
 

@@ -17,7 +17,7 @@
                         Activities
                     </div>
                     <!-- Main Title -->
-                    <h1 class="hero-title">আমাদের কার্যক্রম</h1>
+                    <h1 class="hero-title">সদস্য তালিকা</h1>
                 </div>
             </div>
         </div>
@@ -30,9 +30,24 @@
             <div class="border"></div>
             <p class="section-subtitle">আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের প্রকল্পসমূহ এক নজরে আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের প্রকল্পের স্থির চার্ট</p>
 
+            <!--Member List-->
             <div class="row g-3">
-                <!-- Provide Your Title -->
+                @foreach ($members as $item)
+                    <div class="col-md-3">
+                        <div class="card member-card shadow-sm border-0">
+                            <div class="member-image-wrapper">
+                                <img src="{{ asset($item->photo ?? 'images/no-image.jpg') }}" alt="Member Photo" class="member-image">
+                            </div>
+                            <div class="card-body text-center">
+                                {{-- Basic Info --}}
+                                <h5 class="fw-bold mb-1">{{ $item->full_name }}</h5>
+                                <p class="text-muted mb-2">{{ $item->occupation ?? 'Not specified' }}</p>
+                            </div>
+                        </div>
+                    </div>
+                @endforeach
             </div>
+
         </div>
     </section>
 </x-frontend-layout>

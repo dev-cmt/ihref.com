@@ -19,12 +19,10 @@ Route::get('/', [HomeController::class, 'welcome'])->name('home');
  * View Page => ALL
  * ______________________________________________________________________________________________
  */
-Route::get('/registation/from', [HomeController::class, 'memberRegistation'])->name('registation.from');
-Route::post('/registation/store', [HomeController::class, 'registationStore'])->name('registation.store');
 //______________ PAGE SINGLE
 Route::get('page/activities', [HomeController::class, 'activities'])->name('page.activities');
 Route::get('page/chairman-message', [HomeController::class, 'chairmanMessage'])->name('page.chairman-message');
-Route::get('page/directors-members', [HomeController::class, 'directorsMembers'])->name('page.directors-members');
+Route::get('page/committee-members', [HomeController::class, 'committeeMembers'])->name('page.committee-members');
 Route::get('page/member-list', [HomeController::class, 'memberList'])->name('page.member-list');
 Route::get('page/photo-gallery', [HomeController::class, 'photoGallery'])->name('page.photo-gallery');
 Route::get('page/contact', [HomeController::class, 'contact'])->name('page.contact');
@@ -33,11 +31,14 @@ Route::get('page/news', [HomeController::class, 'news'])->name('page.news');
 Route::get('page/news-details/{slug}', [HomeController::class, 'newsDetails'])->name('page.news-details');
 
 
-Route::middleware(['auth:member'])->group(function () {
-    Route::get('/registation-payment', [HomeController::class, 'registationPayment'])->name('registation-payment');
-    Route::post('/registation-payment/store', [HomeController::class, 'registationPaymentStore'])->name('registation-payment.store');
-    Route::get('/payment/waiting-approval', [HomeController::class, 'waitingApproval'])->name('waiting-approval');
-});
+Route::get('/registration/from', [MemberController::class, 'memberRegistration'])->name('registration.from');
+Route::post('/registration/store', [MemberController::class, 'registrationStore'])->name('registration.store');
+
+// Route::middleware(['auth:member'])->group(function () {
+    Route::get('/registration-payment', [MemberController::class, 'registrationPayment'])->name('registration-payment');
+    Route::post('/registration-payment/store', [MemberController::class, 'registrationPaymentStore'])->name('registration-payment.store');
+    Route::get('/payment/waiting-approval', [MemberController::class, 'waitingApproval'])->name('waiting-approval');
+// });
 
 
 /**______________________________________________________________________________________________

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('member_code')->unique();
             $table->string('full_name');
-            $table->string('slug')->unique();
+            $table->string('slug')->nullable();
             $table->string('father_or_husband')->nullable();
             $table->string('mother')->nullable();
             $table->string('nid')->nullable();
@@ -30,7 +30,7 @@ return new class extends Migration
             $table->foreignId('upazila_id')->nullable()->constrained('upazilas');
             $table->foreignId('union_id')->nullable()->constrained('unions');
             $table->text('present_address')->nullable();
-            $table->string('phone')->nullable();
+            $table->string('phone')->unique();
             $table->string('mobile')->nullable();
             $table->string('photo')->nullable();
             $table->string('password'); // hashed password

@@ -48,14 +48,36 @@ class HomeController extends Controller
         return view('frontend.pages.chairman-message');
     }
 
-    public function directorsMembers()
+    public function committeeMembers(Request $request)
     {
-        return view('frontend.pages.directors-members');
+        $query = Registration::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->orWhere('member_code', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('district_id')) {
+            $query->where('district_id', $request->district_id);
+        }
+
+        $members = $query->paginate(15)->withQueryString(); // keep search params in URL
+        $districts = DB::table('districts')->orderBy('name', 'asc')->get();
+
+        return view('frontend.pages.committee-members', compact('members', 'districts'));
     }
+
+
 
     public function memberList()
     {
-        return view('frontend.pages.member-list');
+        $members = Registration::all();
+
+        return view('frontend.pages.member-list', compact('members'));
     }
 
     public function photoGallery()
@@ -78,104 +100,6 @@ class HomeController extends Controller
     {
         // You can later load news details from the database using $slug
         return view('frontend.pages.news-details', compact('slug'));
-    }
-
-
-
-    /**------------------------------------------------------------------------------
-     * MEMBER REGISTER && PAYMNET REGISTER
-     * ------------------------------------------------------------------------------
-     */
-    public function memberRegistation()
-    {
-        $divisions = DB::table('divisions')->get();
-
-        return view('frontend.pages.register-from', compact('divisions'));
-    }
-
-    public function registationStore(Request $request)
-    {
-        $request->validate([
-            'full_name'          => 'required|string|max:255',
-            'father_or_husband'  => 'required|string|max:255',
-            'mother'             => 'required|string|max:255',
-            'nid'                => 'nullable|string|max:50',
-            'dob'                => 'nullable|date',
-            'division_id'        => 'required|exists:divisions,id',
-            'district_id'        => 'required|exists:districts,id',
-            'upazila_id'         => 'required|exists:upazilas,id',
-            'mobile'             => 'required|string|max:20',
-            'photo'              => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
-        ]);
-
-        $data = $request->all();
-
-        // Handle photo upload
-        if ($request->hasFile('photo')) {
-            $data['photo'] = ImageHelper::uploadImage($request->file('photo'), 'uploads/members');
-        }
-
-        // Generate slug and member code
-        $data['slug'] = Str::slug($data['full_name'] . '-' . time());
-        $data['member_code'] = 'IHRF-' . date('Y') . '-' . str_pad(Registration::count() + 1, 4, '0', STR_PAD_LEFT);
-
-        // Set default hashed password
-        $data['password'] = Hash::make('12345678');
-
-        // Set default status
-        $data['status'] = false; // Pending approval by default
-
-        // Create member
-        $member = Registration::create($data);
-
-        // Login member using custom guard
-        Auth::guard('member')->login($member);
-        
-        return redirect()->route('registation-payment')->with('success', 'Registration completed. Please proceed to payment.');
-    }
-
-    public function registationPayment()
-    {
-        return view('frontend/register-payment');
-    }
-
-    public function registationPaymentStore(Request $request)
-    {
-        $request->validate([
-            'payment_number'      => 'required|numeric|min:1',
-            'transaction_number'  => 'nullable|string|max:100',
-            'transfer_number'     => 'nullable|string|max:100',
-            'message'             => 'nullable|string|max:500',
-            'slip'                => 'nullable|file|mimes:pdf,jpeg,jpg,png,gif,doc,docx|max:2048',
-        ]);
-
-        $slipPath = null;
-        if ($request->hasFile('slip')) {
-            $slipPath = ImageHelper::uploadImage($request->file('slip'), 'uploads/slip');
-        }
-
-        PaymentDetail::create([
-            'payment_date'        => now(),
-            'amount_paid'         => $request->amount_paid,
-            'payment_number'      => $request->input('payment_number'),
-            'transaction_number'  => $request->input('transaction_number'),
-            'transaction_id'      => null, // optional hidden if you want
-            'transfer_number'     => $request->input('transfer_number'),
-            'payment_type'        => $request->input('payment_type'),
-            'reason'              => 'Member Registration',
-            'message'             => $request->input('message'),
-            'slip'                => $slipPath,
-            'status'              => false,
-            'registration_id'     => Auth::guard('member')->id(), // logged in member id
-            'user_id'             => null, // if admin/user also logged in, else null
-        ]);
-
-        return redirect()->route('waiting-approval')->with('success', 'Payment stored successfully!');
-
-    }
-
-    public function waitingApproval(){
-        return view('frontend.pages.waiting-approval');
     }
 
 }

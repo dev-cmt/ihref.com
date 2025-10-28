@@ -20,15 +20,26 @@
         <div class="row justify-content-center">
             <div class="col-lg-8">
                 <div class="card shadow-lg border-0 rounded-3">
-                    <div class="card-body p-5">
+                    <div class="card-body p-5 mt-5">
+
+                        <form action="{{ route('registration-payment') }}" method="GET" class="mb-4">
+                            <div class="row g-2 align-items-center">
+                                <div class="col-md-8">
+                                    <input type="text" name="phone" class="form-control" placeholder="Enter phone number"
+                                        value="{{ request('phone') }}" required>
+                                </div>
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-primary w-100">Search</button>
+                                </div>
+                            </div>
+                        </form>
 
                         <div class="text-center mb-4">
-                            <img class="img-fluid rounded-circle mb-3 border border-3"
-                                width="120"
-                                src="{{ asset('images/logo.jpg') }}" alt="Profile">
-                            <h4 class="mb-0">{{ auth()->guard('member')->user()->name }}</h4>
+                            <img class="img-fluid rounded-circle mb-3 border border-3" style="height: auto; width: 128px; padding: 8px;"
+                                width="120" src="{{ asset('images/logo.png') }}" alt="Profile">
+                            <h4 class="mb-0">{{ $member->full_name }}</h4>
                             <p class="text-muted small">
-                                Member ID: {{ auth()->guard('member')->user()->member_code }}
+                                Member ID: {{ $member->member_code }}
                             </p>
                         </div>
                         <hr class="my-4">
@@ -42,11 +53,12 @@
                             <div class="alert alert-success text-center">{{ session('success') }}</div>
                         @endif
 
-                        <form action="{{ route('registation-payment.store') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('registration-payment.store') }}" method="post" enctype="multipart/form-data">
                             @csrf
 
                             {{-- Hidden text field to send payment type name --}}
                             <input type="hidden" name="payment_type" id="payment_type">
+                            <input type="hidden" name="phone" value="{{request('phone')}}">
 
                             <div class="mb-4">
                                 <div class="row g-3 justify-content-center">
@@ -74,7 +86,7 @@
                                 <div class="row g-3">
                                     <div class="col-12 text-center" id="nagadQR" style="display: none;">
                                         <img src="{{ asset('images/payment/nagad-qr.jpg') }}"
-                                            class="img-fluid border rounded col-12 col-sm-10 col-md-7 col-lg-5 p-2">
+                                            class="img-fluid border rounded col-12 col-sm-10 col-md-7 col-lg-5 p-2 h-auto">
                                     </div>
 
                                     <div class="col-md-6">

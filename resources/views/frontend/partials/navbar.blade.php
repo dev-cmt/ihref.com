@@ -24,8 +24,8 @@
             <ul class="navbar-nav mx-auto mb-2 mb-lg-0">
                 <li class="nav-item"><a class="nav-link" href="{{route('page.activities')}}">আমাদের কার্যক্রম</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.chairman-message')}}">চেয়ারম্যানের বাণী</a></li>
-                <li class="nav-item"><a class="nav-link" href="{{route('page.directors-members')}}">পরিচালক ও সদস্য</a></li>
-                {{-- <li class="nav-item"><a class="nav-link" href="{{route('page.member-list')}}">সদস্য তালিকা</a></li> --}}
+                <li class="nav-item"><a class="nav-link" href="{{route('page.committee-members')}}">পরিচালক ও সদস্য</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{route('page.member-list')}}">সদস্য তালিকা</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.photo-gallery')}}">ফটো গ্যালারি</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.news')}}">খবর</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.contact')}}">ঠিকানা</a></li>

@@ -35,6 +35,28 @@
                     </a>
                 </li>
 
+                <li class="slide">
+                    <a href="{{ route('members.index') }}" class="side-menu__item {{ Request::is('members*') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Member List</span>
+                    </a>
+                </li>
+
+                <li class="slide">
+                    <a href="{{ route('members-approve.index') }}" class="side-menu__item {{ Request::is('member-approve') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Member Approve</span>
+                    </a>
+                </li>
+
+                <!-- Dashboard - Always visible -->
+                <li class="slide">
+                    <a href="{{ route('payments.index') }}" class="side-menu__item {{ Request::is('payments*') ? 'active' : '' }}">
+                        <i class="bx bxs-dashboard side-menu__icon"></i>
+                        <span class="side-menu__label">Payments</span>
+                    </a>
+                </li>
+
 
                 <!-- Developer API -->
                 @can('view developer api')

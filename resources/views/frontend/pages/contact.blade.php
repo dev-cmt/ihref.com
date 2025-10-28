@@ -18,7 +18,7 @@
                     </div>
 
                     <!-- Main Title -->
-                    <h1 class="hero-title">আমাদের কার্যক্রম</h1>
+                    <h1 class="hero-title">ঠিকানা</h1>
                    
                 </div>
             </div>

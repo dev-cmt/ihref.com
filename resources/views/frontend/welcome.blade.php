@@ -44,7 +44,7 @@
                             <div class="feature-tag"><i class="fas fa-redo"></i> রিপিট অর্ডার ফিল্টারিং</div>
                         </div>
                         <div class="cta-buttons">
-                            <a href="{{route('registation.from')}}" class="btn btn-hero-primary">
+                            <a href="{{route('registration.from')}}" class="btn btn-hero-primary">
                                 <i class="fas fa-play-circle"></i> নিবন্ধন করুন
                             </a>
                             <a href="#services" class="btn btn-hero-secondary">

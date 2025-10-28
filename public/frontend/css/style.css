@@ -2077,3 +2077,41 @@ DARK MODE
 #dark-mode-toggle-checkbox:checked+.dark-mode-toggle-label .fa-moon {
     display: none;
 }
+
+
+
+/*
+--------------------------------------------------------------------
+*/
+.member-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    overflow: hidden;
+    border-radius: 15px;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Image container to maintain uniform shape */
+.member-image-wrapper {
+    width: 100%;
+    height: 260px; /* fixed height for all images */
+    overflow: hidden;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+/* Image styling */
+.member-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* keeps aspect ratio and fills area */
+    transition: transform 0.4s ease;
+}
+
+/* Zoom effect */
+.member-image:hover {
+    transform: scale(1.1);
+}
