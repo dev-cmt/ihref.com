@@ -67,8 +67,35 @@
         </div>
     </section>
 
+    <!-- About Us Section -->
+    <section class="py-5">
+        <div class="container">
+            <h2 class="section-title">About Us</h2>
+            <div class="border mb-3"></div>
+            <p class="section-subtitle">আমাদের সম্পর্কে জানুন এবং কেন আমরা আপনার সেরা পছন্দ</p>
+
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <img src="{{ asset('images/logo.png') }}" alt="About Us Image" class="img-fluid rounded shadow">
+                </div>
+                <div class="col-md-6">
+                    <h3>Welcome to Sky Tech Solve</h3>
+                    <p>Sky Tech Solve is a leading software solution provider, specializing in creating advanced web and mobile applications for businesses of all sizes. We focus on delivering high-quality, user-friendly, and innovative solutions that help our clients grow and succeed.</p>
+                    <ul class="list-unstyled">
+                        <li>✅ Experienced & Skilled Team</li>
+                        <li>✅ Customer-Centric Approach</li>
+                        <li>✅ Timely Delivery & Support</li>
+                        <li>✅ Innovative & Scalable Solutions</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary mt-3">Get in Touch</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
     <!-- Features Section -->
-    <section class="py-5 bg-light">
+    <section class="py-5">
         <div class="container">
             <h2 class="section-title">Plugin Features</h2>
             <div class="border"></div>
@@ -177,6 +204,33 @@
             </div>
         </div>
     </section>
+
+    <!-- Chairman's Message Section -->
+    <section class="py-5 bg-light">
+        <div class="container">
+            <h2 class="section-title">Chairman’s Message</h2>
+            <div class="border mb-3"></div>
+            <p class="section-subtitle">এক নজরে চেয়ারম্যানের বার্তা</p>
+
+            <div class="row g-4 align-items-center">
+                <div class="col-md-4 text-center">
+                    <img src="{{ asset('images/logo.png') }}" alt="Chairman Image" class="img-fluid rounded-circle shadow">
+                </div>
+                <div class="col-md-8">
+                    <h3>Mr. Motiur Rahman</h3>
+                    <p><em>Chairman, Sky Tech Solve</em></p>
+                    <p>
+                        Welcome to Sky Tech Solve. Our mission is to provide innovative software solutions that empower businesses and individuals alike. We are committed to delivering high-quality products with integrity, dedication, and excellence.  
+                        Our team works tirelessly to ensure every project meets the highest standards and exceeds client expectations. We believe in building long-term relationships with our clients, based on trust and mutual growth.
+                    </p>
+                    <p>
+                        Thank you for trusting us, and we look forward to collaborating with you to achieve success together.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
 
     <!-- Service Section -->
     <section class="py-5" id="services">
@@ -379,155 +433,6 @@
         </div>
     </section>
 
-
-    <section class="py-5 bg-light">
-        <div class="container">
-            <h2 class="section-title">Supports Multiple Platforms</h2>
-            <div class="border"></div>
-            <p class="section-subtitle">আপনার প্রয়োজন অনুযায়ী বিভিন্ন প্ল্যাটফর্মে আমাদের সমাধানগুলি ব্যবহার করুন</p>
-
-            <div class="row g-4">
-                <div class="col-md-3">
-                    <div class="service-card h-100 p-4 text-center">
-                        <i class="fab fa-wordpress service-icon mb-3"></i>
-                        <h5 class="card-title">ওয়ার্ডপ্রেস প্লাগইন</h5>
-                        <p class="card-text">খুব সহজেই আমাদের অ্যাডভান্সড প্লাগইনটি আপনার ওয়ার্ডপ্রেস সাইটে ইনস্টল করুন
-                        </p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="service-card h-100 p-4 text-center">
-                        <i class="fab fa-google service-icon mb-3"></i>
-                        <h5 class="card-title">Google Sheet Integration</h5>
-                        <p class="card-text">গুগল সীট এন্ট্রিগ্রেশন সহজে ব্যবহার করুন আমাদের এক্সটেনশন</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="service-card h-100 p-4 text-center">
-                        <i class="fab fa-chrome service-icon mb-3"></i>
-                        <h5 class="card-title">Google Chrome Extension</h5>
-                        <p class="card-text">ক্রোম ব্রাউজারে অডার গার্ড এক্সটেনশনের মাধ্যমে কাস্টমারদের সম্পর্কে তথ্য
-                            জানুন</p>
-                    </div>
-                </div>
-                <div class="col-md-3">
-                    <div class="service-card h-100 p-4 text-center">
-                        <i class="fab fa-android service-icon mb-3"></i>
-                        <h5 class="card-title">অ্যান্ড্রয়েড অ্যাপ্লিকেশন</h5>
-                        <p class="card-text">মোবাইলে সহজে ব্যবহার করুন আমাদের অ্যান্ড্রয়েড অ্যাপ</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials Section -->
-    <section id="testimonials" class="py-5">
-        <div class="container">
-            <div class="text-center mb-5">
-                <h2 class="section-title">Customer Experience</h2>
-                <div class="border"></div>
-                <p class="section-subtitle">আমাদের সেবা ব্যবহার করে গ্রাহকদের সফল অভিজ্ঞতা</p>
-            </div>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <div class="testimonial-icon mb-3">
-                                <i class="fas fa-quote-left"></i>
-                            </div>
-                            <p class="testimonial-text">"Frodly ব্যবহার করার পর থেকে আমাদের ফ্রড কেসগুলো কমে গেছে।
-                                এখন আমরা অনেক বেশি আত্মবিশ্বাসের সাথে নতুন গ্রাহকদের সাথে কাজ করতে পারছি।"</p>
-                            <div class="testimonial-author">
-                                <img src="https://i.pravatar.cc/100?img=1" alt="Customer" class="rounded-circle">
-                                <div class="author-info">
-                                    <h5>রহিম আহমেদ</h5>
-                                    <p>ই-কমার্স ব্যবসায়ী</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <div class="testimonial-icon mb-3">
-                                <i class="fas fa-quote-left"></i>
-                            </div>
-                            <p class="testimonial-text">"Frodly এর সেবা আমাদের ব্যবসায় অনেক পরিবর্তন এনেছে। এখন
-                                আমরা সহজেই খারাপ গ্রাহকদের চিহ্নিত করতে পারি এবং সঠিক সিদ্ধান্ত নিতে পারি।"</p>
-                            <div class="testimonial-author">
-                                <img src="https://i.pravatar.cc/100?img=2" alt="Customer" class="rounded-circle">
-                                <div class="author-info">
-                                    <h5>ফাতেমা খাতুন</h5>
-                                    <p>অনলাইন শপ মালিক</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="testimonial-card">
-                        <div class="testimonial-content">
-                            <div class="testimonial-icon mb-3">
-                                <i class="fas fa-quote-left"></i>
-                            </div>
-                            <p class="testimonial-text">"Frodly এর সেবা ব্যবহার করে আমরা আমাদের ফ্রড কেসগুলো ৭০%
-                                কমাতে পেরেছি। এটি আমাদের ব্যবসায় অনেক সুরক্ষা দিয়েছে।"</p>
-                            <div class="testimonial-author">
-                                <img src="https://i.pravatar.cc/100?img=3" alt="Customer" class="rounded-circle">
-                                <div class="author-info">
-                                    <h5>মোঃ সাজিদ</h5>
-                                    <p>অনলাইন শপ মালিক</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Packages Section -->
-    <section class="py-5" id="pricing">
-        <div class="container">
-            <h2 class="section-title">Available Plans & Packages</h2>
-            <div class="border"></div>
-
-            <div class="row row-cols-1 row-cols-md-3 g-4" id="pricing-cards">
-                <div class="col">
-                    <div class="pricing-card h-100 position-relative">
-
-                        <div class="pricing-header text-center p-4">
-                            <h3>৩ দিনের ট্রায়াল</h3>
-                            <h4 class="mb-0">
-                                <span class="original-price">ফ্রি</span>
-                                <span class="discount-price">ফ্রি</span>
-                            </h4>
-                            <p>3 Days</p>
-                        </div>
-                        <div class="pricing-features p-4">
-                            <ul class="list-unstyled mb-4">
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>আনলিমিটেড ফোন নাম্বার চেক*</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>ওয়ার্ডপ্রেস প্লাগইন সুবিধা</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>Google Sheet Integration প্ল্যাগিন সুবিধা</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>Google Extension সুবিধা</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>ওয়েব অ্যাপ্লিকেশন সুবিধা</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>মোবাইল এ্যাপ সুবিধা</li>
-                                <li class="mb-2"><i class="fa-solid fa-check-double text-success me-2"></i>কাস্টম ইন্টিগ্রেশন সুবিধা</li>
-
-                            </ul>
-                            <a href="https://dash.hoorin.com/signup.php" class="btn btn-default w-100">
-                                বিনামূল্যে শুরু করুন
-                            </a>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </section>
-
     <!-- FAQ Section -->
     <section class="py-5" id="faq">
         <div class="container">
@@ -614,59 +519,29 @@
         </div>
     </section>
 
-    <!--Clients section-->
+
+    <!-- About Us Section -->
     <section class="py-5">
         <div class="container">
-            <h2 class="section-title">Our Customers</h2>
-            <div class="border"></div>
-            <p class="section-subtitle">বাংলাদেশের অনেক সফল ব্যবসা আমাদের সেবা ব্যবহার করে ফ্রড কাস্টমার থেকে নিজেদের রক্ষা করছে</p>
+            <h2 class="section-title">About Us</h2>
+            <div class="border mb-3"></div>
+            <p class="section-subtitle">আমাদের সম্পর্কে জানুন এবং কেন আমরা আপনার সেরা পছন্দ</p>
 
-            <div class="client-logo-carousel">
-                <div class="client-logo-track">
-                    <!-- Original logos -->
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (1).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (2).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (3).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (4).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (5).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (6).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (7).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <!-- Dublicate logos -->
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (1).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (2).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (3).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (4).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (5).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (6).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
-                    <div class="client-logo-wrapper">
-                        <img src="{{asset('images/clients/client (7).png')}}" alt="GrayGrids" class="client-logo">
-                    </div>
+            <div class="row g-4 align-items-center">
+                <div class="col-md-6">
+                    <h3>Welcome to Sky Tech Solve</h3>
+                    <p>Sky Tech Solve is a leading software solution provider, specializing in creating advanced web and mobile applications for businesses of all sizes. We focus on delivering high-quality, user-friendly, and innovative solutions that help our clients grow and succeed.</p>
+                    <ul class="list-unstyled">
+                        <li>✅ Experienced & Skilled Team</li>
+                        <li>✅ Customer-Centric Approach</li>
+                        <li>✅ Timely Delivery & Support</li>
+                        <li>✅ Innovative & Scalable Solutions</li>
+                    </ul>
+                    <a href="#contact" class="btn btn-primary mt-3">Get in Touch</a>
+                </div>
+                
+                <div class="col-md-6">
+                    <img src="{{ asset('images/logo.png') }}" alt="About Us Image" class="img-fluid rounded shadow">
                 </div>
             </div>
         </div>

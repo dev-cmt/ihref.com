@@ -22,6 +22,7 @@ Route::get('/', [HomeController::class, 'welcome'])->name('home');
 //______________ PAGE SINGLE
 Route::get('page/activities', [HomeController::class, 'activities'])->name('page.activities');
 Route::get('page/chairman-message', [HomeController::class, 'chairmanMessage'])->name('page.chairman-message');
+Route::get('page/director-members', [HomeController::class, 'directorMembers'])->name('page.director-members');
 Route::get('page/committee-members', [HomeController::class, 'committeeMembers'])->name('page.committee-members');
 Route::get('page/member-list', [HomeController::class, 'memberList'])->name('page.member-list');
 Route::get('page/photo-gallery', [HomeController::class, 'photoGallery'])->name('page.photo-gallery');

@@ -15,6 +15,7 @@ use App\Models\Page;
 use App\Models\PaymentDetail;
 use App\Models\Registration;
 
+use function PHPUnit\Framework\isEmpty;
 
 class HomeController extends Controller
 {
@@ -47,11 +48,16 @@ class HomeController extends Controller
     {
         return view('frontend.pages.chairman-message');
     }
+    public function directorMembers()
+    {
+        return view('frontend.pages.director-message');
+    }
 
     public function committeeMembers(Request $request)
     {
         $query = Registration::query();
 
+        // Apply search filter
         if ($request->filled('search')) {
             $search = $request->search;
             $query->where(function($q) use ($search) {
@@ -61,21 +67,39 @@ class HomeController extends Controller
             });
         }
 
+        // Apply district filter
         if ($request->filled('district_id')) {
             $query->where('district_id', $request->district_id);
         }
 
-        $members = $query->paginate(15)->withQueryString(); // keep search params in URL
+        // Fetch members if any filter is applied, otherwise empty collection
+        if ($request->filled('search') || $request->filled('district_id')) {
+            $members = $query->get(); // fetch all results
+        } else {
+            $members = collect(); // empty collection
+        }
+
+        // Get all districts
         $districts = DB::table('districts')->orderBy('name', 'asc')->get();
 
         return view('frontend.pages.committee-members', compact('members', 'districts'));
     }
 
-
-
-    public function memberList()
+    public function memberList(Request $request)
     {
-        $members = Registration::all();
+        $query = Registration::query();
+
+        // Apply search filter
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function($q) use ($search) {
+                $q->where('full_name', 'like', "%{$search}%")
+                ->orWhere('phone', 'like', "%{$search}%")
+                ->orWhere('member_code', 'like', "%{$search}%");
+            });
+        }
+
+        $members = $query->get();
 
         return view('frontend.pages.member-list', compact('members'));
     }

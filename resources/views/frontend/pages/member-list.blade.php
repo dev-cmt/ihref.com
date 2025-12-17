@@ -30,6 +30,23 @@
             <div class="border"></div>
             <p class="section-subtitle">আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের প্রকল্পসমূহ এক নজরে আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের প্রকল্পের স্থির চার্ট</p>
 
+            <!-- Search Form -->
+            <form action="{{ route('page.member-list') }}" method="GET" class="mb-5 col-8 text-center mx-auto">
+                <div class="row g-2 align-items-center">
+                    <!-- Name / Member Code / Phone -->
+                    <div class="col-md-8">
+                        <input type="text" name="search" class="form-control" value="{{ request('search') }}" placeholder="Enter member ID...">
+                    </div>
+
+                    <!-- Search Button -->
+                    <div class="col-md-4 d-grid">
+                        <button type="submit" class="btn btn-primary w-100">
+                            <i class="bi bi-search"></i> Search
+                        </button>
+                    </div>
+                </div>
+            </form>
+
             <!--Member List-->
             <div class="row g-3">
                 @foreach ($members as $item)

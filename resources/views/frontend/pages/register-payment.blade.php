@@ -37,9 +37,9 @@
                         <div class="text-center mb-4">
                             <img class="img-fluid rounded-circle mb-3 border border-3" style="height: auto; width: 128px; padding: 8px;"
                                 width="120" src="{{ asset('images/logo.png') }}" alt="Profile">
-                            <h4 class="mb-0">{{ $member->full_name }}</h4>
+                            <h4 class="mb-0">{{ $member->full_name ?? '' }}</h4>
                             <p class="text-muted small">
-                                Member ID: {{ $member->member_code }}
+                                Member ID: {{ $member->member_code ?? '' }}
                             </p>
                         </div>
                         <hr class="my-4">

@@ -13,7 +13,7 @@
             <div class="row justify-content-center">
                 <div class="col-lg-10 text-center hero-content">
                     <div class="badge-premium">Activities</div>
-                    <h1 class="hero-title">পরিচালক/কমিটি সদস্য তালিকা</h1>
+                    <h1 class="hero-title">কমিটি সদস্য তালিকা</h1>
                 </div>
             </div>
         </div>
@@ -23,17 +23,17 @@
     <section class="py-5 bg-light">
         <div class="container">
             <!-- Search Form -->
-            <form action="{{ route('page.committee-members') }}" method="GET" class="mb-5">
+            <form action="{{ route('page.committee-members') }}" method="GET" class="mb-5 col-8 text-center mx-auto">
                 <div class="row g-2 align-items-center">
                     <!-- Name / Member Code / Phone -->
-                    <div class="col-md-8">
+                    {{-- <div class="col-md-8">
                         <input type="text" name="search" class="form-control"  
                             value="{{ request('search') }}" 
                             placeholder="Enter name, phone, member ID...">
-                    </div>
+                    </div> --}}
 
                     <!-- District Dropdown -->
-                    <div class="col-md-2">
+                    <div class="col-md-8">
                         <select name="district_id" class="form-select">
                             <option value="">Select City</option>
                             @foreach ($districts as $district)
@@ -46,7 +46,7 @@
                     </div>
 
                     <!-- Search Button -->
-                    <div class="col-md-2 d-grid">
+                    <div class="col-md-4 d-grid">
                         <button type="submit" class="btn btn-primary w-100">
                             <i class="bi bi-search"></i> Search
                         </button>
@@ -77,11 +77,6 @@
                         <p>No members found.</p>
                     </div>
                 @endforelse
-            </div>
-
-            <!-- Pagination -->
-            <div class="d-flex justify-content-center mt-4">
-                {{ $members->links() }}
             </div>
 
         </div>
