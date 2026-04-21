@@ -97,6 +97,7 @@ Hotel Rahmania International Complex, 28/1 C,Toyanbee Circular Road, Motijheel D
             <div class="copyright">
                 Copyright 2025 © <a href="javascript:void(0);" class="text-light text-decoration-none">{{ env('APP_NAME') }}</a>. All Rights Reserved. - Developed By <a target="_blank" href="https://skytechsolve.com">
                     <span class="fw-semibold text-primary">Sky Tech Solve</span>
+                </a>
             </div>
             <!--<div class="footer-badges">
                 <span class="badge">ই-কমার্স</span>
