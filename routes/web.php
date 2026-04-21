@@ -26,7 +26,9 @@ Route::get('page/director-members', [HomeController::class, 'directorMembers'])-
 Route::get('page/committee-members', [HomeController::class, 'committeeMembers'])->name('page.committee-members');
 Route::get('page/member-list', [HomeController::class, 'memberList'])->name('page.member-list');
 Route::get('page/photo-gallery', [HomeController::class, 'photoGallery'])->name('page.photo-gallery');
+Route::get('page/human-rights', [HomeController::class, 'humanRights'])->name('page.human-rights');
 Route::get('page/contact', [HomeController::class, 'contact'])->name('page.contact');
+
 //______________ NEWS
 Route::get('page/news', [HomeController::class, 'news'])->name('page.news');
 Route::get('page/news-details/{slug}', [HomeController::class, 'newsDetails'])->name('page.news-details');

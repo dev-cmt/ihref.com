@@ -21,9 +21,11 @@
                 <!-- Header -->
                 <div class="text-center logo-header mb-4">
                     <img src="{{asset('images/logo.png')}}" alt="logo">
-                    <h4 class="fw-bold mt-3">INTERNATIONAL HUMAN RIGHTS EDUCATION FOUNDATION</h4>
-                    <h5 class="bengali-title">আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশন</h5>
-                    <p class="mb-1">Govt. Reg. No – S - 7259 (448) 07</p>
+                    <h4 class="fw-bold mt-3">INTERNATIONAL HUMANRIGHTS CRIME PREVENTION FOUNDATION
+
+</h4>
+                    
+                    <p class="mb-1">Govt. Reg. No –  S-8053 (74) 08</p>
                 </div>
                 <hr>
 
@@ -40,7 +42,9 @@
                         <p class="mb-4">
                             চেয়ারম্যান/মহাসচিব<br>
                             জনাব,<br>
-                            আমি আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের সদস্য হওয়ার অভিপ্রায়ে
+                            INTERNATIONAL HUMANRIGHTS CRIME PREVENTION FOUNDATION
+
+ সদস্য হওয়ার অভিপ্রায়ে
                             নিচে আমার ব্যক্তিগত তথ্যাদি লিপিবদ্ধ করলাম
                         </p>
 
@@ -241,7 +245,7 @@
                         </form>
 
                         <p class="mt-4">
-                            আমি আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশনের ... এর যে কোন নিয়মকানুন মেনে চলব।
+                            INTERNATIONAL HUMANRIGHTS CRIME PREVENTION FOUNDATION ... এর যে কোন নিয়মকানুন মেনে চলব।
                         </p>
                     </div>
                 </div>
@@ -249,9 +253,9 @@
                 <hr class="my-4">
                 <!-- Footer -->
                 <div class="text-center fw-bold">
-                    Head Office : Baluahat, Sonatola, Bogura <br>
-                    Phone : +8801826-111923, +8801751-491031 <br>
-                    E-mail : shohagprodhancpf063@gmail.com
+                    Head Office : H # 76, 1st Floor, Bir Uttom Ziaur Rahman Sarak, Amtoli Gulshan,Dhaka-1212. <br>
+                    Phone : :+88-02-410 701 20, 8837 448 <br>
+                    E-mail : info@ihcpfbd.org
                 </div>
             </div>
         </div>

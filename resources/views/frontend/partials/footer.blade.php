@@ -4,23 +4,28 @@
         <div class="row">
             <!-- Contact Information -->
             <div class="col-lg-4 col-md-6 footer-section">
-                <h5 class="footer-title">যোগাযোগ</h5>
+                <h5 class="footer-title">Head Office :</h5>
                 <div class="contact-info">
                     <p>
                         <i class="fas fa-map-marker-alt"></i>
-                        <span>Suite - 813, Floor - 8th (lift - 7), Shah Ali Plaza, Mirpur 10, Dhaka - 1216, Bangladesh.</span>
+                        <span>H # 76, 1st Floor, Bir Uttom Ziaur Rahman Sarak, Amtoli Gulshan,Dhaka-1212.</span>
                     </p>
                     <p>
                         <i class="fas fa-envelope"></i>
-                        <span><a href="mailto:ask@prodevsltd.com" class="text-light text-decoration-none">ask@prodevsltd.com</a></span>
+                        <span><a href="mailto:shohagprodhancpf063@gmail.com" class="text-light text-decoration-none">info@ihcpfbd.org</a></span>
+                    </p>
+                    <p>
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span>Corporate Head Office:-
+Hotel Rahmania International Complex, 28/1 C,Toyanbee Circular Road, Motijheel Dhaka-1000, Bangladesh.</span>
                     </p>
                     <p>
                         <i class="fas fa-phone"></i>
-                        <span>+88 01867 41 79 44</span>
+                        <span>Tel:+88-02-410 701 20, 8837 448</span>
                     </p>
                     <p>
                         <i class="fab fa-whatsapp"></i>
-                        <span>+88 01867 41 79 44</span>
+                        <span> </span>
                     </p>
                 </div>
             </div>
@@ -81,23 +86,21 @@
 
             <!-- About -->
             <div class="col-lg-3 col-md-6 footer-section">
-                <h5 class="footer-title">About Us</h5>
+                <h5 class="footer-title">আমাদের সম্পর্কে</h5>
                 <p class="footer-about">
-                    <strong>Frodly</strong> বাংলাদেশি ই-কমার্স ও এফ-কমার্স বিক্রেতাদের জন্য প্রতারণা প্রতিরোধে সহায়ক একটি টুল।
-                    কাস্টমারের ফোন নম্বর বিশ্লেষণ করে অর্ডার ইতিহাস, কুরিয়ার ব্যবহার ও রিটার্নের তথ্য
-                    প্রদান করে সঠিক সিদ্ধান্ত নিতে সাহায্য করে।
+                    সবুজ পৃথিবী গড়ার লক্ষ্যে নিয়ে আন্তর্জাতিক মানবাধিকার এডুকেশন ফাউন্ডেশন কর্তৃক “মাসব্যাপি শিক্ষার্থীদের মাঝে ফলজ/বনজ চারা বিতরণ ” কর্মসূচির অংশ হিসেবে বগুড়া জেলার সোনাতলা উপজেলায় সদর ইউনিয়ন নামাজখেলী।েলা
                 </p>
             </div>
         </div>
 
         <div class="footer-bottom">
             <div class="copyright">
-                Copyright © 2022 - 2025 All Rights Reserved By Frodly.com
+                Copyright 2025 All Rights Reserved By Frodly.com
             </div>
-            <div class="footer-badges">
+            <!--<div class="footer-badges">
                 <span class="badge">ই-কমার্স</span>
                 <span class="badge">ওয়ার্ডপ্রেস</span>
-            </div>
+            </div>-->
         </div>
     </div>
 </footer>
