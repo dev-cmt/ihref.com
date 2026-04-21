@@ -1,3 +1,4 @@
+@ -0,0 +1,40 @@
 <x-frontend-layout title="Activities Page">
     <!-- Hero Section -->
     <section class="hero-section">
@@ -18,8 +19,8 @@
                     </div>
 
                     <!-- Main Title -->
-                    <h1 class="hero-title">চেয়ারম্যানের বাণী</h1>
-                   
+                    <h1 class="hero-title">মানবাধিকার</h1>
+
                 </div>
             </div>
         </div>

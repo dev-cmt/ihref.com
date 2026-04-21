@@ -29,7 +29,7 @@
                 <li class="nav-item"><a class="nav-link" href="{{route('page.member-list')}}">সদস্য</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.photo-gallery')}}">ফটো গ্যালারি</a></li>
                 {{-- <li class="nav-item"><a class="nav-link" href="{{route('page.news')}}">খবর</a></li> --}}
-                <li class="nav-item"><a class="nav-link" href="{{route('page.human-rights')}}">মানবাধিকার</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ route('page.human-rights') }}">মানবাধিকার</a></li>
                 <li class="nav-item"><a class="nav-link" href="{{route('page.contact')}}">ঠিকানা</a></li>
             </ul>
 

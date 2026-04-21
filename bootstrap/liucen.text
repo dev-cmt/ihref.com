@@ -1,0 +1,9 @@
+# Allowed domain list for this project (one host per line)
+# Examples:
+# ihref.com
+# www.ihref.com
+
+ihref.com
+localhost
+127.0.0.1
+::1

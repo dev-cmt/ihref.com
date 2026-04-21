@@ -79,7 +79,7 @@
                     </table>
 
                     <div class="mt-3">
-                        {{ $members->links() }}
+                        {{ $members->links('backend.pagination.paginate') }}
                     </div>
 
                 </div>

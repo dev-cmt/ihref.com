@@ -109,6 +109,11 @@ class HomeController extends Controller
         return view('frontend.pages.photo-gallery');
     }
 
+    public function humanRights()
+    {
+        return view('frontend.pages.human-rights');
+    }
+
     public function contact()
     {
         return view('frontend.pages.contact');
